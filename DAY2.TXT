@@ -149,7 +149,7 @@ do bp
 
 
 -------------
-TASK 4
+TASK 4 
 -------------
 how to equally pantay pantay na subnet:
 192.168.0.0/24 subnet equally to 8 offices
@@ -157,3 +157,134 @@ Convert 8 is 2r_3
 addto/24 + /3 = /27, 4th, 32i
 ipasok
 !!!unable to finish
+
+------------------------
+!DAY2 Assignment
+------------------------
+1. BDOVPN
+D1, A1, P1
+BDOVPN 172.16.0.0/16 25 wfh
+C 25 is 5bit
+S /32 - /5 = /27
+I 4th, 32i
+subnet: 172.16.0.32/27
+1st  172.16.0.33
+last 172.16.0.62
+bu   172.16.0.63/27
+not yours 172.16.0.64/27
+
+@D1
+conf t
+vlan 2
+name BDOVPN
+exit
+interface vlan 2
+no shut
+ip add 172.16.0.33 255.255.255.224
+exit
+ip dhcp excluded-add 172.16.0.33 172.16.0.37
+ip dhcp pool BDOVPN
+network 172.16.32 255.255.255.224
+default-router 172.16.0.33
+end
+
+@A1
+conf t
+int e0/0
+no shut
+switchport access vlan 2
+do sh vlan brief
+
+@P1
+conf t
+int e0/0
+no shut
+ip address dhcp
+do bp
+
+-------------------------
+2. BPI.COM.PH
+D1, A2, P2
+BPI.COM.PH 10.0.0.0/8 5000 emp
+C 5000 is 13bit
+S /32 - /13 = /19
+I 3rd, 32i
+subnet: 10.0.32.0/19
+1st  10.0.32.1
+last 10.0.63.254
+bu   10.0.64.0/19
+not yours 10.0.65.0/19
+
+@D1
+conf t
+vlan 3
+name BPI.COM.PH
+exit
+interface vlan 3
+no shut
+ip add 10.0.32.1 255.255.224.0
+exit
+ip dhcp excluded-add 10.0.32.1 10.0.32.100
+ip dhcp pool BPI.COM.PH
+network 10.0.32.0 255.255.224.0
+default-router 10.0.32.1
+end
+
+@A2
+conf t
+int e1/0
+no shut
+switchport access vlan 3
+do sh vlan brief
+
+@P2
+conf t
+int e1/0
+no shut
+ip address dhcp
+do bp
+
+-----------------------------
+3.PSBANKVPN
+1. BDOVPN
+D1, D2, S2
+BDOVPN 172.16.0.0/16 6 wfh
+C 6 is 3bit
+S /32 - /3 = /29
+I 4th, 8i
+subnet: 172.16.0.8/29
+1st  172.16.0.9
+last 172.16.0.14
+bu   172.16.0.15/29
+not yours 172.16.0.16/29
+
+@D1
+conf t
+vlan 4
+name PSBANKVPN
+exit
+interface vlan 4
+no shut
+ip add 172.16.0.9 255.255.255.248
+exit
+ip dhcp excluded-add 172.16.0.9
+ip dhcp pool PSBANKVPN
+network 172.16.0.8 255.255.255.248
+default-router 172.16.0.9
+end
+
+@D2
+conf t
+int e1/0
+no shut
+switchport access vlan 4
+do sh vlan brief
+
+@S1
+conf t
+int e1/0
+no shut
+ip address dhcp
+do bp
+
+
