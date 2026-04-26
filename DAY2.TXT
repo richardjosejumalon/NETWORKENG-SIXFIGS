@@ -280,7 +280,7 @@ no shut
 switchport access vlan 4
 do sh vlan brief
 
-@S1
+@S2
 conf t
 int e1/0
 no shut
