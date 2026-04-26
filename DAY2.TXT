@@ -105,3 +105,55 @@ do bp
 
 
 --------new client---------
+D1, A1, P1
+
+TELUS.COM 10.0.0.0/8 
+chevronvlan 350 agents
+c 350 is 9bit
+s 32-9 /23
+i 3rd, 2i
+subnet 10.0.2.0/23
+1st  10.0.2.1
+last 10.0.2.254
+bu   10.0.3.0/23
+not yours: 10.0.4.0/23
+
+@D1
+conf t
+vlan 9
+name telusvlan
+exit
+interface vlan 9
+no shut
+ip add 10.0.2.1 255.255.254.0
+exit
+ip dhcp excluded-add 10.0.2.1 10.0.2.100
+ip dhcp pool telusvlan
+network 10.0.2.0 255.255.254.0
+default-router 10.0.2.1
+end
+
+@A1
+conf t
+int e0/0
+no shut
+switchport access vlan 9
+do sh vlan brief
+
+@P1
+conf t
+int e0/0
+no shut
+ip address dhcp
+do bp
+
+
+-------------
+TASK 4
+-------------
+how to equally pantay pantay na subnet:
+192.168.0.0/24 subnet equally to 8 offices
+Convert 8 is 2r_3
+addto/24 + /3 = /27, 4th, 32i
+ipasok
+!!!unable to finish
