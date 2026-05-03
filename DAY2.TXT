@@ -212,8 +212,8 @@ I 3rd, 32i
 subnet: 10.0.32.0/19
 1st  10.0.32.1
 last 10.0.63.254
-bu   10.0.64.0/19
-not yours 10.0.65.0/19
+bu   10.0.63.255/19
+not yours 10.0.64.0/19
 
 @D1
 conf t
@@ -246,9 +246,8 @@ do bp
 
 -----------------------------
 3.PSBANKVPN
-1. BDOVPN
 D1, D2, S2
-BDOVPN 172.16.0.0/16 6 wfh
+PSBANKVPN 172.16.0.0/16 6 wfh
 C 6 is 3bit
 S /32 - /3 = /29
 I 4th, 8i
