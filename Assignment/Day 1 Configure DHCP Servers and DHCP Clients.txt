@@ -1,0 +1,107 @@
+1. Configure D1 and D2 as DHCP server for VLAN 10 100 20
+D1: .100-.199
+D2: .200-.254
+Password: pass
+
+!@D1 ip range 100-199
+conf t
+ ip dhcp excluded-address 10.2.1.1 10.2.1.99
+ ip dhcp excluded-address 10.2.1.200 10.2.1.254
+ !
+ ip dhcp pool MGMTPOOL
+  network 10.2.1.0 255.255.255.0
+  default-router 10.2.1.1
+  dns-server 10.2.1.1
+  domain-name MGMT.COM
+  end
+
+conf t
+ ip dhcp pool SERVERPOOL
+  network 192.168.1.128 255.255.255.224
+  default-router 192.168.1.129
+  dns-server 192.168.1.129
+  domain-name SERVER.COM
+  end
+
+conf t
+ interface e1/0
+  switchport mode access
+  switchport access vlan 100
+  end
+
+!@D2 ip range 200-254
+conf t
+ ip dhcp excluded-address 10.2.1.1 10.2.1.199
+ !
+ ip dhcp pool MGMTPOOL
+  network 10.2.1.0 255.255.255.0
+  default-router 10.2.1.2
+  dns-server 10.2.1.2
+  domain-name MGMT.COM
+  end
+
+conf t
+ ip dhcp pool DNSPOOL
+  network 10.2.2.0 255.255.255.0
+  default-router 10.2.2.2
+  dns-server 10.2.2.2
+  domain-name DNS.COM
+  end
+
+conf t
+ interface e1/0
+  switchport mode access
+  switchport access vlan 20
+  end
+
+2. Configure P1 and P2 as DHCP clients for their VLANs
+
+!@A1
+conf t
+ interface e0/0
+  switchport mode access
+  switchport access vlan 10
+  end
+
+!@A2
+conf t
+ interface e1/0
+  switchport mode access
+  switchport access vlan 10
+  end
+
+!@P1
+conf t
+ interface e0/0
+  no shut
+  ip add dhcp
+  end
+
+!@P2
+conf t
+ interface e1/0
+  no shut
+  ip add dhcp
+  end
+
+3. Configure S1 and S2 as DHCP clients for their VLANs
+
+!@S1
+conf t
+ interface e1/0
+  no shut
+  ip add dhcp
+  end
+show ip int brief | exclude una
+
+!@S2
+conf t
+ interface e1/0
+  no shut
+  ip add dhcp
+  end
+show ip int brief | exclude una
+
+
+
+
