@@ -23,7 +23,7 @@ firewall task 1: block porn
 config t
 NO ip access-list standard NOPORN
 ip access-list standard NOPORN
-DENY 66.254.0.0 0.0.255.255no ip 
+DENY 66.254.0.0 0.0.255.255
 deny 161.49.0.0 0.0.255.255
 DENY 104.21.0.0 0.0.255.255
 DENY 68.235.0.0 0.0.255.255
