@@ -1,0 +1,48 @@
+DAY 5
+Cisco Switch Protocols
+1. 802.1q - trunk
+2. 802.1d - spanning tree protocol
+3. 802.1w - rapid spanning tree protocol
+4. 802.1s - multiple spanning tree
+5. 802.1x - port security
+
+root bridge - boss switch
+root port - pinakamababa na interface number na nakakabit kay root bridge
+designated - sa mga endpoints
+alternate - ibang interface
+sh cdp neighbors - to see interfaces connected
+
+by default cost
+ethernet = 100
+fa = 19
+gig = 4
+teng+ = 2
+
+Open github rivan day 5 Network Access (NA).md
+practice port aggregation po11, po22, po20, po12, po10
+
+
+Fortinet
+user: admin
+pass: enter
+new pass: C1sc0123
+enter "execute factoryreset"
+enter "get system int phys"
+then get the ip to access thru securecrt ss2
+arrowup password
+save and accept
+
+config system admin
+ edit admin
+  set accprofile super_admin
+  set vdom root
+  set password C1sc0123
+  next
+ edit chard
+  set accprofile super_admin
+  set vdom root
+  set password pass
+  end
+show system admin
+
+line 2013 in network access.md
